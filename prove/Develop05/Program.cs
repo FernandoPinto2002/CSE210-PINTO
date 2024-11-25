@@ -1,32 +1,27 @@
-using System; // For console input/output
-using System.IO; // For file handling
-using System.Collections.Generic; // For lists and collections
+using System; 
+using System.IO; 
+using System.Collections.Generic; 
 
-// Base class for Goals
 abstract class Goal
 {
     public string Name { get; set; }
     public string Description { get; set; }
     public int Points { get; set; }
 
-    // Constructor
     protected Goal(string name, string description, int points)
     {
         Name = name;
         Description = description;
         Points = points;
     }
-
-    // Abstract methods for subclasses to implement
     public abstract string SaveData();
     public abstract void Display();
     public abstract int RecordEvent();
 }
 
-// SimpleGoal class
 class SimpleGoal : Goal
 {
-    private bool Completed { get; set; } // Encapsulated property
+    private bool Completed { get; set; }
 
     public SimpleGoal(string name, string description, int points)
         : base(name, description, points)
@@ -61,7 +56,6 @@ class SimpleGoal : Goal
     }
 }
 
-// EternalGoal class
 class EternalGoal : Goal
 {
     public EternalGoal(string name, string description, int points)
@@ -83,10 +77,9 @@ class EternalGoal : Goal
     }
 }
 
-// ChecklistGoal class
 class ChecklistGoal : Goal
 {
-    private int CurrentCount { get; set; } // Encapsulated property
+    private int CurrentCount { get; set; } 
     public int TargetCount { get; private set; }
     public int BonusPoints { get; private set; }
 
@@ -118,14 +111,13 @@ class ChecklistGoal : Goal
         CurrentCount++;
         if (CurrentCount >= TargetCount)
         {
-            CurrentCount = TargetCount; // Cap the count
+            CurrentCount = TargetCount; 
             return Points + BonusPoints;
         }
         return Points;
     }
 }
 
-// Main Program
 class EternalQuestProgram
 {
     private static List<Goal> goals = new List<Goal>();
@@ -287,7 +279,7 @@ class EternalQuestProgram
                 {
                     bool completed = bool.Parse(parts[4]);
                     var goal = new SimpleGoal(name, description, points);
-                    goal.SetCompleted(completed); // Use method to set completed
+                    goal.SetCompleted(completed); 
                     goals.Add(goal);
                 }
                 else if (type == "Eternal")
@@ -300,7 +292,7 @@ class EternalQuestProgram
                     int currentCount = int.Parse(parts[5]);
                     int bonusPoints = int.Parse(parts[6]);
                     var checklistGoal = new ChecklistGoal(name, description, points, targetCount, bonusPoints);
-                    checklistGoal.SetCurrentCount(currentCount); // Use method to set current count
+                    checklistGoal.SetCurrentCount(currentCount); 
                     goals.Add(checklistGoal);
                 }
             }
